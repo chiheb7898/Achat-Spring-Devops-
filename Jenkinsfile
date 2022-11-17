@@ -36,7 +36,14 @@ agent any
                 sh 'mvn sonar:sonar -Dsonar.host.url=http://192.168.1.4:9000 -Dsonar.login=admin -Dsonar.password=root';
             }
         }
-        stage ('Unit Test and Mockito'){
+
+                stage('Publish to Nexus') { 
+        steps {
+         sh 'mvn clean package deploy:deploy-file -DgroupId=tn.esprit.rh -DartifactId=achat -Dversion=1.0 -DgeneratePom=true -Dpackaging=jar -DrepositoryId=deploymentRepo -Durl=http://192.168.1.4:8081/repository/maven-releases/ -Dfile=target/achat-1.0.jar'
+
+           }
+        }
+                stage ('Unit Test and Mockito'){
             steps {
                 echo 'Testing... ';
                 sh 'mvn test';
