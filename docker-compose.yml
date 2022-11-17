@@ -19,7 +19,7 @@ services:
   app:
     depends_on:
       - mysqldb
-    image:  f0rt1x/spring-app:latest
+    image:  chiheb98/spring-app:latest
     restart: on-failure
     env_file: ./.env
     user: root
