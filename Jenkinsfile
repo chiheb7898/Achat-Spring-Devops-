@@ -36,6 +36,13 @@ agent any
                 sh 'mvn sonar:sonar -Dsonar.host.url=http://192.168.1.4:9000 -Dsonar.login=admin -Dsonar.password=root';
             }
         }
+        
+              stage ('Unit Test and Mockito'){
+            steps {
+                echo 'Testing... ';
+                sh 'mvn test';
+            }
+        }
 
                 stage('Publish to Nexus') { 
         steps {
@@ -43,13 +50,8 @@ agent any
 
            }
         }
-        
-           stage ('Unit Test and Mockito'){
-            steps {
-                echo 'Testing... ';
-                sh 'mvn test';
-            }
-        }
+
+     
 
 
 		
