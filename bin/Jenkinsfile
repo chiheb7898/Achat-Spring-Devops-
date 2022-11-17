@@ -19,7 +19,28 @@ agent any
 		}
 
 
-		
+		 stage ("Nettoyage"){
+		 	steps{
+		 		bat """mvn clean """
+		 	}
+		 }
+
+
+ 		 stage ("Creation de Livrable"){
+		 	steps{
+		 		bat """mvn package -Dmaven.test.skip=true"""
+		 	}
+		 }
+
+		 stage ("Lancement des Tests Unitaires"){
+		 	steps{
+		 		bat """mvn test"""
+		 	}
+		 }
+
+
+	
+	
 
 
 
