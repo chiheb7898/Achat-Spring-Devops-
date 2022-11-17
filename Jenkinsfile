@@ -14,7 +14,7 @@ agent any
 
 		stage ("Verification du  version Maven"){
 			steps{
-				bat """mvn -version"""
+				sh """mvn -version"""
 			}
 		}
 
