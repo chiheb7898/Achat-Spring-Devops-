@@ -1,6 +1,4 @@
-package src.test.java.tn.esprit.rh.achat.services;
-
-
+package tn.esprit.rh.achat.services;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import tn.esprit.rh.achat.entities.SecteurActivite;
 import tn.esprit.rh.achat.repositories.SecteurActiviteRepository;
-import tn.esprit.rh.achat.services.ISecteurActiviteService;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -43,9 +40,9 @@ public class SecteurActiviteServiceTest {
 	public void retrieveAllSecteurActiviteMocked() {
 		// create mock list
 		List<SecteurActivite> mockedList = new ArrayList<SecteurActivite>();
-		mockedList.add(new SecteurActivite("1", "food"));
-		mockedList.add(new SecteurActivite("2", "sport"));
-		mockedList.add(new SecteurActivite("3", "music"));
+		mockedList.add(new SecteurActivite((long)1, "ss", "food",null));
+		mockedList.add(new SecteurActivite((long)2,"2", "sport",null));
+		mockedList.add(new SecteurActivite((long)3,"3", "music",null));
 
 		Mockito.when(mockAR.findAll()).thenReturn(mockedList);
 		List<SecteurActivite> listSecteurActivite = AS.retrieveAllSecteurActivite();
@@ -57,9 +54,9 @@ public class SecteurActiviteServiceTest {
 	public void testAddDeleteRetrieveAllWithDb() {
 		List<SecteurActivite> addedSecteurActivite = new ArrayList<SecteurActivite>();
 
-		addedSecteurActivite.add(AS.addSecteurActivite(new SecteurActivite("1", "food")));
-		addedSecteurActivite.add(AS.addSecteurActivite(new SecteurActivite("2", "sport")));
-		addedSecteurActivite.add(AS.addSecteurActivite(new SecteurActivite("3", "music")));
+		addedSecteurActivite.add(AS.addSecteurActivite(new SecteurActivite((long)1, "ss", "food",null)));
+		addedSecteurActivite.add(AS.addSecteurActivite(new SecteurActivite((long)1, "ss", "food",null)));
+		addedSecteurActivite.add(AS.addSecteurActivite(new SecteurActivite((long)3,"3", "music",null)));
 
 		List<SecteurActivite> listSecteurActivite = AS.retrieveAllSecteurActivite();
 		Assertions.assertEquals(3, listSecteurActivite.size());
@@ -76,7 +73,7 @@ public class SecteurActiviteServiceTest {
 	@Test
 	@Order(4)
 	public void testUpdateWithDb() {
-		SecteurActivite secteurActivite = AS.addSecteurActivite(new SecteurActivite("1", "food"));
+		SecteurActivite secteurActivite = AS.addSecteurActivite(new SecteurActivite((long)1, "ss", "food",null));
 		
 		Assertions.assertEquals("1", secteurActivite.getCodeSecteurActivite());
 		Assertions.assertEquals("food", secteurActivite.getLibelleSecteurActivite());
@@ -96,7 +93,7 @@ public class SecteurActiviteServiceTest {
 	@Test
 	@Order(5)
 	public void testRetrieveByIdWithDb() {
-		SecteurActivite secteurActivite = AS.addSecteurActivite(new SecteurActivite("1", "food"));
+		SecteurActivite secteurActivite = AS.addSecteurActivite(new SecteurActivite((long)1, "ss", "food",null));
 		
 		SecteurActivite retrievedSecteurActivite = AS.retrieveSecteurActivite(secteurActivite.getIdSecteurActivite());
 		
