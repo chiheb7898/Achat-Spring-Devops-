@@ -30,6 +30,12 @@ agent any
                 sh 'mvn compile';
             }
         }
+        stage('MVN SONARQUBE'){
+            steps{
+                echo 'Sonar static test ...';
+                sh 'mvn sonar:sonar -Dsonar.host.url=http://192.168.1.4:9000 -Dsonar.login=admin -Dsonar.password=root';
+            }
+        }
         stage ('Unit Test and Mockito'){
             steps {
                 echo 'Testing... ';
@@ -37,12 +43,7 @@ agent any
             }
         }
 
-stage('MVN SONARQUBE'){
-            steps{
-                echo 'Sonar static test ...';
-                sh 'mvn sonar:sonar -Dsonar.host.url=http://192.168.1.4:9000 -Dsonar.login=admin -Dsonar.password=root';
-            }
-        }
+
 		
 
 
