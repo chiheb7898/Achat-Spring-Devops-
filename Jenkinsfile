@@ -71,6 +71,13 @@ stage('Build Docker Image') {
                                    sh 'docker push firassougui/spring-app:latest'
                                             }
           } 
+          stage('Run Docker compose') {
+                               steps {
+                                    script {
+                                      sh 'docker-compose up -d'
+                                    }
+                                }
+                            }
 
 
 
