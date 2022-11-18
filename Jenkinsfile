@@ -1,5 +1,9 @@
 pipeline{
-
+environment { 
+        registry = "firassougui/achat" 
+        registryCredential = 'dockerhub_id' 
+        dockerImage = '' 
+    }
 
 agent any 
 	
@@ -51,26 +55,26 @@ agent any
                 sh 'mvn test';
             }
         }
-         stage('Build And Deploy Docker Image'){
-                    steps{
-                        script{
-                            echo "deploying the application"
-                            withCredentials([usernamePassword(credentialsId:'dockerhub',usernameVariable:'USER',passwordVariable:'PWD')]) {
-                                sh "echo $PWD | docker login -u $USER --password-stdin"
-                                sh "docker build -t firassougui/spring-app:1.0 ."
-                                sh "docker push firassougui/spring-app:1.0"
+        dckr_pat_kkKloslXFbFjbMBsDzOeOycaUIo
+stage('Build Docker Image') {
+                      steps {
+                          script {
+                           sh 'docker build -t firassougui/spring-app:latest .'
+                         }
+                      }
+                  }
 
-                        }
-                    }
-                }
-            }
+                  stage('login dockerhub') {
+                                        steps {
+                                     sh 'docker login -u firassougui -p dckr_pat_kkKloslXFbFjbMBsDzOeOycaUIo'
+                                            }
+          }
 
-
-
-     
-
-
-		
+                          stage('Push Docker Image') {
+                                        steps {
+                                   sh 'docker push firassougui/spring-app:latest'
+                                            }
+          } 
 
 
 
