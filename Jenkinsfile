@@ -51,7 +51,7 @@ agent any
                 sh 'mvn test';
             }
         }
-        dckr_pat_kkKloslXFbFjbMBsDzOeOycaUIo
+        
 stage('Build Docker Image') {
                       steps {
                           script {
