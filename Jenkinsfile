@@ -43,13 +43,13 @@ agent any
 
            }
         }
-        /*
+        
               stage ('Unit Test and Mockito'){
             steps {
                 echo 'Testing... ';
                 sh 'mvn test';
             }
-        }*/
+        }
 
 
      
