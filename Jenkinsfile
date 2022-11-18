@@ -1,9 +1,5 @@
 pipeline{
-environment { 
-        registry = "firassougui/achat" 
-        registryCredential = 'dockerhub_id' 
-        dockerImage = '' 
-    }
+
 
 agent any 
 	
