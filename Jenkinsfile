@@ -1,26 +1,28 @@
-lpipeline {
-    environment {
+pipeline{
+    
+    environment { 
 
-        registry = "moetezz/moetezrepo"
+        registry = "chiheb/chihebrepo" 
 
-        registryCredential = 'moetezz123'
+        registryCredential = 'chiheb98' 
 
-        dockerImage = ''
+        dockerImage = '' 
     }
     agent any
-    stages {
+    
+    stages{
         stage('Git') {
             steps {
                 echo 'Getting Project From Git';
-                git branch: 'Stock',
-                url : 'https://github.com/GhadaHafsi/ProjetCI-No-Name.git';
+                git branch: 'Chiheb',
+                url : 'https://github.com/chiheb7898/Achat-Spring-Devops-.git';
                 }
         }
         stage('MVN CLEAN') {
             steps {
                 script
                     {
-                        if (isUnix())
+                        if (isUnix()) 
                             {
                                 sh 'mvn --batch-mode clean';
                             }
@@ -31,12 +33,12 @@ lpipeline {
                     }
                 }
             }
-
+        
         stage('MVN COMPILE'){
             steps{
                 script
                     {
-                        if (isUnix())
+                        if (isUnix()) 
                             {
                                 sh 'mvn --batch-mode compile';
                             }
@@ -47,55 +49,49 @@ lpipeline {
                     }
                  }
         }
-
-        /*stage('MVN SONARQUBE'){
+        
+        stage('MVN SONARQUBE'){
             steps{
                 echo 'Sonar static test ...';
-                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=181JMT0700';
-            }
-        }*/
-
-        stage('TEST') {
-            steps {
-                sh 'mvn test';
+                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=root';
             }
         }
-
+            
+        stage('TEST') {
+            steps {
+                sh(script: 'mvn --batch-mode -Dmaven.test.failure.ignore=true test')
+            }
+        }
         stage('NEXUS') {
             steps {
                 sh "mvn deploy -DskipTests";
             }
         }
-        stage('Build image') {
+        stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                     sh 'docker build -t chiheb98/spring-app:latest .'
                 }
             }
         }
-        stage('Deploy image') {
+        stage('login dockerhub') {
+            steps {
+                sh 'docker login -u chiheb98 -p dckr_pat_oQ069FqGq4kXFotDr2Kdldxh1wA'
+            }
+        }
+        stage('Push Docker Image') {
+            steps {
+                sh 'docker push chiheb98/spring-app:latest'
+            }
+        }
+        stage('Run Spring && MySQL Containers') {
             steps {
                 script {
-                    docker.withRegistry( '', registryCredential ) {
-                        dockerImage.push()
+                    sh 'docker-compose up -d'
                     }
-                }
             }
         }
-
-
-         stage("Docker Compose"){
-         steps{
-                sh 'docker-compose up '
-				sh 'docker ps '
-            }
-        }
-
-            }
-        }
-        stage('MVN SONARQUBE'){
-                    steps{
-                        echo 'Sonar static test ...';
-                        sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=root';
-                    }
-                }
+           
+    }
+    
+}
