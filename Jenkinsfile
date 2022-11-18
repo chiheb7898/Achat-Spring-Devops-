@@ -43,6 +43,7 @@ agent any
 
            }
         }
+
         
               stage ('Unit Test and Mockito'){
             steps {
@@ -50,6 +51,20 @@ agent any
                 sh 'mvn test';
             }
         }
+         stage('Build And Deploy Docker Image'){
+                    steps{
+                        script{
+                            echo "deploying the application"
+                            withCredentials([usernamePassword(credentialsId:'dockerhub',usernameVariable:'USER',passwordVariable:'PWD')]) {
+                                sh "echo $PWD | docker login -u $USER --password-stdin"
+                                sh "docker build -t firassougui/spring-app:1.0 ."
+                                sh "docker push firassougui/spring-app:1.0"
+
+                        }
+                    }
+                }
+            }
+
 
 
      
