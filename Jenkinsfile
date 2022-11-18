@@ -46,7 +46,7 @@ agent any
 
                 stage('Publish to Nexus') { 
         steps {
-         sh 'mvn clean package deploy:deploy-file -DgroupId=tn.esprit.rh -DartifactId=achat -Dversion=1.0 -DgeneratePom=true -Dpackaging=jar -DrepositoryId=deploymentRepo -Durl=http://192.168.1.4:8081/repository/maven-releases/ -Dfile=target/achat-1.0.jar'
+         sh 'mvn -DskipTests clean package deploy:deploy-file -DgroupId=tn.esprit.rh -DartifactId=achat -Dversion=1.0 -DgeneratePom=true -Dpackaging=jar -DrepositoryId=deploymentRepo -Durl=http://192.168.1.4:8081/repository/maven-releases/ -Dfile=target/achat-1.0.jar'
 
            }
         }

@@ -47,11 +47,11 @@ class ProduitServiceImplTest {
     ProduitServiceImpl produitServiceImp;
     @InjectMocks
     StockServiceImpl stockServiceImp;
-    Produit produit = new Produit( null, " 12345", "ahmed",(float)7.4,new Date(),new Date(), null, null, null);
+    Produit produit = new Produit(  " 12345", "ahmed",(float)7.4,new Date(),new Date());
     List<Produit> listProduit = new ArrayList<Produit>(){
         {
-            add(new Produit(null, "123456", "ahmed1",(float)7.4,new Date(),new Date(), null, null, null));
-            add(new Produit(null, "1234567", "ahmed2",(float)8.4,new Date(),new Date(), null, null, null));
+            add(new Produit("123456", "ahmed1",(float)7.4,new Date(),new Date()));
+            add(new Produit("1234567", "ahmed2",(float)8.4,new Date(),new Date()));
         }
     };
     @Test
@@ -86,7 +86,7 @@ class ProduitServiceImplTest {
     @Test
     void testAssignProduitToStock() {
         Stock s = new Stock("jjjjjj", (Integer) 9 ,(Integer) 2 );
-        Produit p = new Produit(null, " 12345", "lotfi",(float)7.4,new Date(),new Date(), s, null, null);
+        Produit p = new Produit( " 12345", "lotfi",(float)7.4,new Date(),new Date());
         Stock stockAdded = stockService.addStock(s);
         Produit produitAdded = produitService.addProduit(p);
         produitService.assignProduitToStock(produitAdded.getIdProduit(),stockAdded.getIdStock());
